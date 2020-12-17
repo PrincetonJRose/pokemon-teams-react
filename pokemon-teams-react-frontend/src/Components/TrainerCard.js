@@ -18,7 +18,7 @@ const TrainerCard =( props )=> {
             <p>
                 { trainer.name }
             </p>
-            <button>
+            <button onClick = { ()=> props.addPokemon( trainer ) }>
                 Add Pokemon
             </button>
             <ul>
