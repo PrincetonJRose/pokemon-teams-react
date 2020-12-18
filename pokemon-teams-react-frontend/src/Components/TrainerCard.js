@@ -10,6 +10,7 @@ const TrainerCard =( props )=> {
         <Pokemon
             key = { pokemon.id }
             pokemon = { pokemon }
+            releasePokemon = { props.releasePokemon }
         />
     )
 

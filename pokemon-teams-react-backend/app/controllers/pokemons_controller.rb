@@ -18,6 +18,16 @@ class PokemonsController < ApplicationController
         end
     end
 
+    def destroy
+        @pokemon = Pokemon.find_by( id: params[:id] )
+        if @pokemon
+            @pokemon.destroy
+            render json: { messages: ["#{ @pokemon.nickname } was released back into the wild."] }, status: :ok
+        else
+            render json: { errors: ["Could not find that pokemon. Please release one from a team."] }, status: :unauthorized
+        end
+    end
+
     private
 
     def pokemon_params

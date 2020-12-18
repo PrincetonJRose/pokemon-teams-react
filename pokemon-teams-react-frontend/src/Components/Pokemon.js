@@ -7,7 +7,7 @@ const Pokemon =( props )=> {
     return (
         <li>
             { `${ pokemon.nickname } (${ pokemon.species })` }
-            <button className='release' >
+            <button className='release' onClick={ () => props.releasePokemon( pokemon ) } >
                 Release
             </button>
         </li>

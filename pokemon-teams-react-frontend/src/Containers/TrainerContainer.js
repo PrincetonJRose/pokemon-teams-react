@@ -22,8 +22,11 @@ const TrainerContainer =( )=> {
             trainer = { trainer }
             key = { trainer.id }
             addPokemon = { addPokemon }
+            releasePokemon = { releasePokemon }
         />
     )
+
+    const alerts =( messages )=> messages.forEach( message => alert( message ) )
 
     const addPokemon =( trainer )=> {
         const id = trainer.id
@@ -45,7 +48,28 @@ const TrainerContainer =( )=> {
                         trainer.pokemons.push( pokemonData )
                     return trainer
                 }))
-            else pokemonData.errors.forEach( error => alert( error ) )
+            else alerts( pokemonData.errors )
+        })
+    }
+
+    const releasePokemon =( pokemon )=> {
+        const id = pokemon.id
+        fetch( pokemonUrl + id, { method: 'DELETE' } )
+        .then( res => res.json() )
+        .then( pokemonData => {
+            if ( !pokemonData.errors ) {
+                let updatedTrainers = trainers.map( trainer => {
+                    if ( trainer.id === pokemon.trainer_id ) {
+                        trainer.pokemons = trainer.pokemons.filter( pokemon => pokemon.id !== id )
+                    }
+                    return trainer
+                })
+                setTrainers( updatedTrainers )
+                setTimeout(() => {
+                    alerts( pokemonData.messages )
+                }, 100 );
+            }
+            else alerts( pokemonData.errors )
         })
     }
 
